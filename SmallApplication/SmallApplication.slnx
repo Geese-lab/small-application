@@ -1,3 +1,12 @@
 <Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path="ci-cd.yml" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="../.gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="SmallApplication.Tests/SmallApplication.Tests.csproj" Id="e1baf6a6-4450-43e7-adb5-682fcc676356" />
   <Project Path="SmallApplication/SmallApplication.csproj" />
 </Solution>
