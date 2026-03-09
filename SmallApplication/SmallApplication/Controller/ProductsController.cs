@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmallApplication.Models;
 using SmallApplication.Services.Interfaces;
+using SmallApplication.Constants;
 
 namespace SmallApplication.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route(ApiRoutes.Products)]
 public class ProductsController : ControllerBase
 {
     private readonly IProductService _service;

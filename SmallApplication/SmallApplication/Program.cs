@@ -1,3 +1,4 @@
+using SmallApplication.Middleware;
 using SmallApplication.Repositories;
 using SmallApplication.Repositories.Interfaces;
 using SmallApplication.Services;
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 

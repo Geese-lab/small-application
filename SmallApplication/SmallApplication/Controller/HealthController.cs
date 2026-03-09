@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmallApplication.Constants;
 
 namespace SmallApplication.Controller;
 
 [ApiController]
-[Route("api/health")]
+[Route(ApiRoutes.Health)]
 public class HealthController : ControllerBase
 {
     [HttpGet]
