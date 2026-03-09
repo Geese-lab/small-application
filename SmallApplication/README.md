@@ -1,30 +1,55 @@
 # Simple ASP.NET Core Web API
 
-This project is a simple backend API built with ASP.NET Core (.NET 8 LTS).  
-It demonstrates a clean layered architecture, dependency injection, logging, and in-memory data storage.
+This project is a backend API built with .NET 8 (LTS) using ASP.NET Core Web API.
+It demonstrates a clean layered architecture, dependency injection, logging, testing, CI/CD, and cloud deployment to Azure.
+
+The application provides simple CRUD functionality using in-memory storage and exposes REST endpoints.
 
 ## Features
 
 - ASP.NET Core Web API
-- Layered architecture
-- Controllers / Services / Repositories / Models
+- Layered architecture (Controllers, Services, Repositories, Models)
 - Dependency Injection
 - In-memory data storage
 - Logging with ILogger
-- Configuration using appsettings.json and environment variables
-- Error handling with custom middleware
+- Configuration via appsettings.json and environment variables
+- Global error handling with custom middleware
 - Health check endpoint
+- Unit tests
+- CI/CD pipeline with GitHub Actions
+- Deployment to Azure App Service
 
 ## Project Structure
 
-SimpleApi
+The project follows a simple layered architecture.
+
+Controllers handle HTTP requests and responses.
+Services contain business logic.
+Repositories abstract the data access layer.
+Models define the data structures.
+
+SmallApplication
 │
 ├── Controllers
+│   ├── ProductsController.cs
+│   ├── UsersController.cs
+│   └── HealthController.cs
+│
 ├── Services
+│   ├── Interfaces
+│   └── Implementations
+│
 ├── Repositories
+│   ├── Interfaces
+│   └── InMemory implementations
+│
 ├── Models
+│
 ├── Middleware
+│   └── ExceptionMiddleware.cs
+│
 ├── Constants
+│
 ├── appsettings.json
 └── Program.cs
 
@@ -35,7 +60,7 @@ SimpleApi
 - `UsersController` – CRUD operations for users
 - `HealthController` – application status endpoint
 
-## Example Endpoints
+## API Endpoints
 
 | Method | Endpoint | Description |
 |------|------|------|
@@ -47,17 +72,25 @@ SimpleApi
 | POST | /api/users | Create user |
 | GET | /api/health | Health check |
 
-## Running the Application
+Example response:
 
-Requirements:
+{
+  "status": "Healthy"
+}
+
+##Running the Application
+
+Requirements
 
 - .NET 8 SDK
 
-Run the project:
+Run the API locally:
 
+dotnet restore
+dotnet build
 dotnet run
 
-Open Swagger UI:
+Swagger UI will be available at:
 
 https://localhost:5001/swagger
 
@@ -66,18 +99,119 @@ https://localhost:5001/swagger
 
 Configuration is handled via:
 
-- `appsettings.json`
+- appsettings.json
+
 - environment variables
 
-Example environment variable override:
+Example configuration file:
+
+{
+  "AppSettings": {
+    "ApplicationName": "Simple API",
+    "Version": "1.0"
+  }
+}
+
+Environment variables can override these values.
+
+Example:
 
 AppSettings__Version=2.0
 
 
 ## Logging
 
-Logging is implemented using the built-in ASP.NET Core `ILogger`.
+Logging is implemented using the built-in ASP.NET Core logging system (ILogger).
+
+Example log levels:
+
+- Information
+
+- Warning
+
+- Error
+
+Logs are written to the console by default.
+
+## Error Handling
+
+Global error handling is implemented using custom middleware.
+
+The middleware catches unhandled exceptions and returns a standardized response.
+
+Example response:
+
+{
+  "message": "Internal server error"
+}
 
 ## Data Storage
 
-This project uses **in-memory repositories** instead of a database.
+The application uses in-memory repositories instead of a database.
+
+This keeps the project simple and allows it to run without external dependencies.
+
+## Testing
+
+Unit tests are implemented using the xUnit testing framework.
+
+The tests verify the service layer logic and repository interactions.
+
+Run tests locally:
+
+dotnet test
+
+Example tested scenarios:
+
+- retrieving products
+
+- creating products
+
+- retrieving entities by ID
+
+## CI/CD Pipeline
+
+Continuous Integration and Deployment is implemented using GitHub Actions.
+
+The pipeline runs automatically on push to the main branch.
+
+Pipeline steps:
+
+1. Checkout repository
+2. Setup .NET
+3. Restore dependencies
+4. Build project
+5. Run tests
+6. Publish application
+7. Deploy to Azure App Service
+
+Workflow location:
+
+.github/workflows/ci-cd.yml
+
+Sensitive values are stored securely using GitHub Secrets.
+
+## Environment Variables in Azure
+
+Application configuration in Azure is managed using Application Settings (environment variables).
+
+Example variables:
+
+|Name|Value|
+|-----|-----|
+|AppSettings__ApplicationName|Simple API|
+|AppSettings__Version|1.0|
+
+These override values defined in appsettings.json.
+
+## Technologies Used
+
+- .NET 8 (LTS)
+- ASP.NET Core Web API
+- xUnit
+- GitHub Actions
+- Azure App Service
+
+## Author
+
+Backend Web API project demonstrating modern .NET backend development practices including architecture, CI/CD, testing, and cloud deployment.
