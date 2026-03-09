@@ -11,6 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Show directory tree
+        run: |
+          echo "Repository directory tree:"
+          ls -R .
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -34,3 +39,4 @@ jobs:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
           package: publish
+
