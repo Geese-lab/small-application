@@ -25,13 +25,13 @@ jobs:
         run: dotnet restore ./SmallApplication/SmallApplication/SmallApplication.csproj
 
       - name: Build
-        run: dotnet build --no-restore --configuration Release
+        run: dotnet build ./SmallApplication/SmallApplication/SmallApplication.csproj --no-restore --configuration Release 
 
       - name: Test
-        run: dotnet test --no-build
+        run: dotnet test ./SmallApplication/SmallApplication/SmallApplication.csproj --no-build
 
       - name: Publish
-        run: dotnet publish -c Release -o publish
+        run: dotnet publish ./SmallApplication/SmallApplication/SmallApplication.csproj -c Release -o publish
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
