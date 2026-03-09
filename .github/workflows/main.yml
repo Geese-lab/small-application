@@ -22,7 +22,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: Restore
-        run: dotnet restore .\SmallApplication\SmallApplication.slnx
+        run: dotnet restore ./SmallApplication/SmallApplication/SmallApplication.csproj
 
       - name: Build
         run: dotnet build --no-restore --configuration Release
