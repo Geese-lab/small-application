@@ -1,0 +1,19 @@
+CREATE TABLE users (
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	email TEXT UNIQUE NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE orders (
+	id SERIAL PRIMARY KEY,
+	user_id INT NOT NULL,
+	total DECIMAL(10, 2) NOT NULL,
+	created_at TIMESTAMP DEFAULT NOW(),
+
+	CONSTRAINT fk_user
+		FOREIGN KEY(user_id) 
+		REFERENCES users(id)
+		ON DELETE CASCADE
+);
+
