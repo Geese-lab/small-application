@@ -11,6 +11,9 @@ public class UserRepository
     public UserRepository()
     {
         _connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION");
+
+        if (string.IsNullOrWhiteSpace(_connectionString))
+            throw new ArgumentNullException(nameof(_connectionString), "DB_CONNECTION is not set");
     }
 
     public async Task<IEnumerable<User>> GetUsers()

@@ -18,9 +18,9 @@ namespace SmallApplication.Controller
         }
 
         [HttpGet]
-        public async Task<IEnumerable<User>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _repository.GetUsers();
+            return Ok(await _repository.GetUsers());    
         }
     }
 }
