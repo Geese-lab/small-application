@@ -7,31 +7,51 @@ public class InMemoryProductRepository : IProductRepository
 {
     private readonly List<Product> _products = new();
 
-    public IEnumerable<Product> GetAll() => _products;
+    private readonly object _lock = new();
+
+    public IEnumerable<Product> GetAll()
+    {
+        lock (_lock)
+        {
+            return _products.ToList();
+        }
+    }
 
     public Product? GetById(int id) 
         => _products.FirstOrDefault(p => p.Id == id);
 
     public void Add(Product product)
     {
-        _products.Add(product);
+        lock (_lock)
+        {
+            if (_products.Any(p => p.Id == product.Id))
+                throw new InvalidOperationException($"A product with Id {product.Id} already exists.");
+
+            _products.Add(product);
+        }
     }
 
     public void Update(Product product)
     {
-        var existing = GetById(product.Id);
-        if (existing != null) return;
+        lock (_lock)
+        {
+            var existing = GetById(product.Id);
+            if (existing == null) return;
 
-        existing.Name = product.Name;
-        existing.Price = product.Price;
+            existing.Name = product.Name;
+            existing.Price = product.Price;
+        }
     }
 
     public void Delete(int id)
     {
-        var product = GetById(id);
-        if (product != null)
+        lock (_lock)
         {
-            _products.Remove(product);
+            var product = GetById(id);
+            if (product != null)
+            {
+                _products.Remove(product);
+            }
         }
     }
 }

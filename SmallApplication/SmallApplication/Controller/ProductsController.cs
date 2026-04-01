@@ -27,7 +27,7 @@ public class ProductsController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult Get(int id) 
+    public IActionResult GetById(int id) 
     {
         var product = _service.GetById(id);
         if (product == null)
@@ -37,10 +37,13 @@ public class ProductsController : ControllerBase
     }
 
     [HttpPost]
-    public IActionResult Create(Product product)
+    public IActionResult Create([FromBody] Product product)
     {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
         _service.Create(product);
-        return Created("", product);
+        return CreatedAtAction(nameof(GetById), new { id = product.Id }, product);
     }
 
     [HttpDelete("{id}")]
